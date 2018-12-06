@@ -15,14 +15,14 @@ const RestaurantSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   author: {
     id: {
-      type: String(mongoose.Schema.Types.ObjectId),
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
     username: String
   },
   comments: [
     {
-      type: String(mongoose.Schema.Types.ObjectId),
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
     }
   ]
