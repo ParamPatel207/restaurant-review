@@ -17,12 +17,11 @@ var express        = require("express"),
       commentRoute    = require("./routes/comments"),
       userRoute       = require("./routes/user"),
       passwordRoute   = require("./routes/password");
+     
 
 // connect to the DB
 let url = process.env.DATABASEURL || "mongodb://localhost/restaurants"; // fallback in case global var not working
-mongoose.connect(url, { useMongoClient: true })
-      .then(() => console.log(`Database connected`))
-      .catch(err => console.log(`Database connection error: ${err.message}`));
+mongoose.connect(url, {useNewUrlParser: true});
 
 app.set("view engine", "ejs");
 app.use(helmet());
@@ -61,5 +60,5 @@ app.use("/users", userRoute);
 app.use("/", passwordRoute);
 
 app.listen(process.env.PORT, process.env.IP, function(){
-  console.log("RestaurantServer Has Started!");
+  console.log("The Restaurant Server Has Started!");
 });
