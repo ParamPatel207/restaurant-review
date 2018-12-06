@@ -163,7 +163,7 @@ router.put("/:id", middleware.checkRestaurantOwenership, upload.single('image'),
       let lat = data[0].latitude,
           lng = data[0].longitude,
           location = data[0].formattedAddress;
-      let newData = { name, image, description, author, location, lat, lng };
+      let newData = { name, image, description, author, location, lat, lng, rating };
       
       //find and update the correct restaurants
       Restaurant.findByIdAndUpdate(req.params.id, {$set: newData}, (err, updatedRestaurants) => {
@@ -237,6 +237,7 @@ var restaurantRating = function(restaurants)
   var netRating = [];
   restaurants.comments.forEach(comment=>
   netRating.push(comment.rating))
+  console.log(netRating);
   var rating = 0;
   netRating.forEach(crat =>
   rating +crat);

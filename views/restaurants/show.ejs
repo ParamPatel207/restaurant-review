@@ -170,7 +170,37 @@
     var contentString = `
       <strong><%= restaurants.name %><br />
       <%= restaurants.location %></strong>
-      <p><%= restaurants.rating %></p>
+      <p>  <% if (restaurants.rating == 1) { %>
+              <p>
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </p>
+              <% } else if (restaurants.rating == 2) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurants.rating == 3) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurants.rating == 4) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurants.rating == 5) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } %></p>
     `
     var infowindow = new google.maps.InfoWindow({
       content: contentString

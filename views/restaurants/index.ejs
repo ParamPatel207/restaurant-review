@@ -58,9 +58,40 @@ for(var i=0;restaurants.length;i++)
 
     <div class="col-md-3 col-sm-6">
       <div class="thumbnail card">
-        <img class="campground__image" data-src="<%= restaurant %>" alt="<%= restaurant %>" />
+        <img class="campground__image" data-src="<%= restaurant.image.url%>" alt="<%= restaurant._id %>" />
         <div class="caption">
-          <h4 class="caption"><%= restaurant %></h4>
+          <h4 class="caption"><%= restaurant.name%></h4>
+            <p>  <% if (restaurant.rating == 1) { %>
+              <p>
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </p>
+              <% } else if (restaurant.rating == 2) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurant.rating == 3) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurant.rating == 4) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (restaurant.rating == 5) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } %></p>
         </div>
         <p>
           <a class="btn btn-primary btn-sm btn-b-mg" href="/restaurants/<%= restaurant._id %>">
