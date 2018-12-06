@@ -38,23 +38,23 @@ cloudinary.config({
 
 // ============= ROUTES ==============
 // Define escapeRegex function to avoid regex DDoS attack
-// const escapeRegex = text => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+const escapeRegex = text => text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 
 // INDEX -show all Restaurants
 router.get("/", (req, res) => {
   let noMatch = null;
   if (req.query.search) {
-  //   const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-  //   Restaurant.find({name: regex}, function(err, allRestaurants) {
-  //     if (err) { console.log(err); }
-  //     else {
-  //       if (allRestaurants.length < 1) {
-  //         noMatch = "No restaurant found, please try again.";
-  //       }
-  //       res.render("restaurants/index", { [restaurants] : allRestaurants, page: "restaurants", noMatch: noMatch });  
-  //     }
-  //   });
-  // } else {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    Restaurant.find({name: regex}, function(err, allRestaurants) {
+      if (err) { console.log(err); }
+      else {
+        if (allRestaurants.length < 1) {
+          noMatch = "No restaurant found, please try again.";
+        }
+        res.render("restaurants/index", { [restaurants] : allRestaurants, page: "restaurants", noMatch: noMatch });  
+      }
+    });
+  } else {
     // Get all Restaurants from DB
     Restaurant.find({}, function(err, allRestaurants) {
       if (err) { console.log(err); }
