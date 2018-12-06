@@ -1,0 +1,191 @@
+<% include ../partials/header %>
+<div class="row">
+  <div class="col-md-3">
+    <p class="lead">RestaurantReview</p>
+    <div id="map"></div>
+  </div>
+  <div class="col-md-9">
+    <div class="thumbnail">
+      <img class="img-responsive" src="<%= restaurants.image.url %>">
+      <div class="caption">
+        <h4><a><%= restaurants.name %></a></h4>
+        <p><%=restaurants.rating%></p>
+        <p><%= restaurants.description %></p>
+        <p>
+          <em>Submitted By <a href="/users/<%= restaurants.author.id %>"><%= restaurants.author.username %></a>, <%= moment(restaurants.createdAt).fromNow() %></em>
+        </p>
+        <% if (currentUser && restaurants.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
+          <a class="btn btn-warning btn-sm" href="/restaurants/<%= restaurants._id %>/edit">Edit</a>
+          <form class="delete-form" action="/restaurants/<%= restaurants._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        <% } %>
+      </div>
+    </div>
+    <div class="well">
+      <div class="text-right">
+        <a class="btn btn-success btn-sm pull-right" role="button" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new comment
+        </a>
+      </div>
+      <!--Comment section title-->
+      <h4><span class="glyphicon glyphicon glyphicon-comment" aria-hidden="true"></span> <strong>Comments</strong></h4>
+      <!--Collapse Add a comment form START-->
+      <div class="collapse" id="collapseComment">
+        <div class="well" style="border-left: 3px solid #00A546;">
+          <% if (!currentUser) { %>
+            <h5>You need to be logged in first. Click <a href="/login">here</a> to go to the login page.</h5>
+          <% } %>
+          <% if (currentUser) { %>
+            <h4>Say something about this restaurants <span class="glyphicon glyphicon glyphicon-pencil" aria-hidden="true"></span></h4>
+            <form id="add-comment-form" action="/restaurants/<%= restaurants._id %>/comments" method="POST">
+              <div class="form-group">
+                <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="comment[text]" placeholder="What are you thinking about?" form="add-comment-form" rows="5" cols="70" autocomplete="off"></textarea>
+              </div>
+              <label for="comment_rating">Rating:</label>
+                  <fieldset class="form-group radio-buttons" id="comment_rating">
+                    <input type="radio" name="comment[rating]" value="1" />
+                    <label for="1"> <span class="glyphicon glyphicon-star" aria-hidden="true"></span></label>
+                    <input type="radio" name="comment[rating]" value="2" />
+                    <label for="2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></label>
+                    <input type="radio" name="comment[rating]" value="3" />
+                    <label for="3"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></label>
+                    <input type="radio" name="comment[rating]" value="4" />
+                    <label for="4"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></label>
+                    <input type="radio" name="comment[rating]" value="5" checked="true"/>
+                    <label for="5"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></label>
+
+              <div class="form-group">
+                <button class="btn btn-success btn-sm">Send</button>
+              </div>
+            </form>
+          <% } %>
+        </div>
+      </div>
+      <!--Collapse Add a comment form END-->
+      <hr>
+      <!--Check if there are comments-->
+      <% if (restaurants.comments.length === 0) { %>
+        <em style="color: grey;">No comments yet. Say something about this restaurants!</em>
+      <% } %>
+      <% restaurants.comments.forEach(comment => { %>
+        <div class="row">
+          <div class="col-md-12">
+            <strong>
+                <a href="/users/<%= comment.author.id %>"><%= comment.author.username %></a>
+            </strong>
+            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+            <p>
+              <%= comment.text %>
+            </p>
+            <% if (comment.rating == 1) { %>
+              <p>
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              </p>
+              <% } else if (comment.rating == 2) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (comment.rating == 3) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (comment.rating == 4) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } else if (comment.rating == 5) { %>
+                <p>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                </p>
+              <% } %>
+            <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
+              <a
+                class="btn btn-warning btn-xs"
+                role="button"
+                data-toggle="collapse"
+                href="#collapseEdit<%= comment._id %>"
+                aria-expanded="false"
+                aria-controls="collapse<%= comment._id %>"
+              >Edit</a>
+              <form
+                id="delete-form"
+                action="/restaurants/<%= restaurants._id %>/comments/<%= comment._id %>?_method=DELETE"
+                method="POST"
+                style="display: inline;"
+              >
+                <button class="btn btn-danger btn-xs">Delete</button>
+              </form>
+              <!--Edit comment form-->
+              <!--make each id attribute unique by adding comment._id-->
+              <div class="collapse" id="collapseEdit<%= comment._id %>">
+                <div class="well" style="border-left: 3px solid #ffbb33; margin-top: 15px;">
+                  <h4>Edit your comment <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></h4>
+                  <form id="edit-comment-form" action="/restaurants/<%= restaurants._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                    <div class="form-group">
+                      <input class="form-control" type="text" disabled value="<%= currentUser.username %>">
+                    </div>
+                    <div class="form-group">
+                      <textarea class="form-control" name="comment[text]" placeholder="What are you think about?" form="edit-comment-form" rows="5" cols="70" autocomplete="off"><%= comment.text %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <button class="btn btn-warning btn-xs">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            <% } %>
+            <hr>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+<script>
+ function initMap() {
+    var lat = <%= restaurants.lat %>;
+    var lng = <%= restaurants.lng %>;
+    console.log(lat+"  ,   "+lng);
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= restaurants.name %><br />
+      <%= restaurants.location %></strong>
+      <p><%= restaurants.rating %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map,
+    });
+    
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLManIEbcbPo8JQM6cAZyR-oJfImyJwt8&callback=initMap"
+async defer></script>
+<% include ../partials/footer %>
