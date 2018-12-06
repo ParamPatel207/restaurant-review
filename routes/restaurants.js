@@ -51,7 +51,7 @@ router.get("/", (req, res) => {
         if (allRestaurants.length < 1) {
           noMatch = "No restaurant found, please try again.";
         }
-        res.render("restaurants/index", { [restaurants] : allRestaurants, page: "restaurants", noMatch: noMatch });  
+        res.render("restaurants/index", { restaurants : allRestaurants, page: "restaurants", noMatch: noMatch });  
       }
     });
   } else {
@@ -60,7 +60,7 @@ router.get("/", (req, res) => {
       if (err) { console.log(err); }
       else {
         console.log(allRestaurants)
-        res.render("restaurants/index", { [restaurants]: allRestaurants, page: "restaurants", noMatch: noMatch });  
+        res.render("restaurants/index", { restaurants: allRestaurants, page: "restaurants", noMatch: noMatch });  
       }
     }); 
   }
