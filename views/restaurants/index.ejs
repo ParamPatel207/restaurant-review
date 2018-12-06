@@ -2,7 +2,7 @@
 <% include ../partials/header %>
 <script type="text/javascript">
   function initMap() {
-    var restaurants =<%-restaurants%>;
+    var restaurants =<%=restaurants%>;
 var map = new google.maps.Map(document.getElementById('map'), {
   zoom: 8, 
            center: {lat : restaurants[0][lat], lng : restaurants[0][lng]},
@@ -54,13 +54,13 @@ for(var i=0;restaurants.length;i++)
       <h4><%= noMatch %></h4>
     </div>
   <% } %>
-  <%console.log(restaurants);restaurants.forEach(restaurant => {%>
+  <%console.log(restaurants);restaurants.forEach((restaurant,index) => {%>
 
     <div class="col-md-3 col-sm-6">
       <div class="thumbnail card">
-        <img class="campground__image" data-src="<%= restaurant.image.url %>" alt="<%= restaurant.name %>" />
+        <img class="campground__image" data-src="<%= restaurant %>" alt="<%= restaurant %>" />
         <div class="caption">
-          <h4 class="caption"><%= restaurant.name %></h4>
+          <h4 class="caption"><%= restaurant %></h4>
         </div>
         <p>
           <a class="btn btn-primary btn-sm btn-b-mg" href="/restaurants/<%= restaurant._id %>">

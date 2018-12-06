@@ -36,7 +36,7 @@ router.post('/password_reset', function(req, res, next) {
         service: 'Gmail', 
         auth: {
           user: 'ppparampatel@gmail.com',
-          pass: 'process.env.emailPass',
+          pass: process.env.emailPass,
         }
       });
       var mailOptions = {
@@ -100,12 +100,12 @@ router.post('/reset/:token', function(req, res) {
         service: 'Gmail', 
         auth: {
           user: 'ppparampatel@gmail.com',
-          pass: 'process.env.emailPass'
+          pass: process.env.emailPass,
         }
       });
       var mailOptions = {
         to: user.email,
-        from: 'learntocodeinfo@mail.com',
+        from: 'ppparampatel@gmail.com',
         subject: 'Your password has been changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'

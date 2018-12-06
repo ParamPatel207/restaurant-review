@@ -50,6 +50,7 @@ router.get("/", (req, res) => {
       else {
         if (allRestaurants.length < 1) {
           noMatch = "No restaurant found, please try again.";
+          
         }
         res.render("restaurants/index", { restaurants : allRestaurants, page: "restaurants", noMatch: noMatch });  
       }
@@ -59,7 +60,6 @@ router.get("/", (req, res) => {
     Restaurant.find({}, function(err, allRestaurants) {
       if (err) { console.log(err); }
       else {
-        console.log(allRestaurants)
         res.render("restaurants/index", { restaurants: allRestaurants, page: "restaurants", noMatch: noMatch });  
       }
     }); 
