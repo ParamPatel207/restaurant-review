@@ -20,8 +20,10 @@ router.post("/register", (req, res) => {
   });
   
   if (req.body.adminCode === process.env.ADMINCODE) {
-    console.log(process.env.ADMINCODE);
     newUser.isAdmin = true;
+  }
+  else{
+    newUser.isAdmin = false;
   }
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {

@@ -95,7 +95,8 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), (req, res) => {
       let lat = data[0].latitude,
           lng = data[0].longitude,
           location = data[0].formattedAddress;
-      let newRestaurant = { name, image, description, author, location, lat, lng,rating};
+          rating = 1;
+      let newRestaurant = { name, image, description, author, location, lat, lng, rating};
     
       // create a new Restaurants and save to DB
       Restaurant.create(newRestaurant, (err, newlyCreated) => {
@@ -203,7 +204,7 @@ router.put("/:id", middleware.checkRestaurantOwenership, upload.single('image'),
         let lat = data[0].latitude,
             lng = data[0].longitude,
             location = data[0].formattedAddress;
-        let newData = { name, image, description, author, location, lat, lng };
+        let newData = { name, image, description, author, location, lat, lng,rating };
         
         //find and update the correct restaurants
         Restaurant.findByIdAndUpdate(req.params.id, {$set: newData}, (err, updatedRestaurants) => {
