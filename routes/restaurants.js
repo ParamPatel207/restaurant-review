@@ -60,6 +60,7 @@ router.get("/", (req, res) => {
     Restaurant.find({}, function(err, allRestaurants) {
       if (err) { console.log(err); }
       else {
+
         res.render("restaurants/index", { restaurants: allRestaurants, page: "restaurants", noMatch: noMatch });  
       }
     }); 
@@ -94,7 +95,7 @@ router.post("/", middleware.isLoggedIn, upload.single('image'), (req, res) => {
       let lat = data[0].latitude,
           lng = data[0].longitude,
           location = data[0].formattedAddress;
-      let newRestaurant = { name, image, description, author, location, lat, lng, };
+      let newRestaurant = { name, image, description, author, location, lat, lng,rating};
     
       // create a new Restaurants and save to DB
       Restaurant.create(newRestaurant, (err, newlyCreated) => {
@@ -119,9 +120,7 @@ router.get("/:id", (req, res) => {
       req.flash("error", "restaurant not found");
       res.redirect("back");
     } else {
-      //render show template with that restaurants
       foundRestaurant.rating = restaurantRating(foundRestaurant);
-      console.log(foundRestaurant)
       res.render("restaurants/show", { restaurants: foundRestaurant });
     }
   });
@@ -236,17 +235,16 @@ var restaurantRating = function(restaurants)
 {
   var netRating = [];
   restaurants.comments.forEach(comment=>
-  netRating.push(comment.rating))
-  console.log(netRating);
+  netRating.push(comment.rating));
   var rating = 0;
   netRating.forEach(crat =>
-  rating +crat);
+  rating = rating +crat);
   rating = rating/netRating.length;
-//  if(rating=1 && rating<1.5){return 1;}
-   if(rating<=2 && rating>1.5){return 2;}
-  else if(rating<=3){return 3;}
-  else if(rating<=4) {return 4;}
-  else if(rating<=5) {return 5;}
+  if(rating>=1 && rating<=1.5){return 1;}
+  else if(rating<=2 && rating>1.5){return 2;}
+  else if(rating<=3&& rating>2){return 3;}
+  else if(rating<=4 && rating>3) {return 4;}
+  else if(rating<=5 && rating>4) {return 5;}
   
 }
 module.exports = router;

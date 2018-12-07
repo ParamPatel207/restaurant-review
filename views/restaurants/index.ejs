@@ -1,145 +1,111 @@
-
 <% include ../partials/header %>
-<script type="text/javascript">
-  function initMap() {
-    var restaurants =<%=restaurants%>;
-var map = new google.maps.Map(document.getElementById('map'), {
-  zoom: 8, 
-           center: {lat : restaurants[0][lat], lng : restaurants[0][lng]},
-           scrollwheel: false,
-});}
+  <header id="map">
+    </header>
+<br>
+    <form class="form-inline"action="/restaurants" method="GET">
+      <div class="form-group has-feedback">
+        <label for="search"></label>
+        <input class="form-control" type="text" name="search" placeholder="Search restaurants" autocomplete="off" />
+        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+      </div>
+    </form>
+    <hr>
+    <a class="pull-right" href="/restaurants/new">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      Share New Restaurant
+    </a>
+  
+  <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+    <% if (noMatch !== null) {%>
+      <div class="col-md-12">
+        <h4><%= noMatch %></h4>
+      </div>
+    <% } %>
+    <% restaurants.forEach(restaurant => {%>
+      <div class="col-md-3 col-sm-6">
+        <div class="thumbnail card">
+          <img class="campground__image" data-src="<%= restaurant.image.url %>" alt="<%= restaurant.name %>" />
+          <div class="caption">
+              <h4 class="caption"><%= restaurant.name %></h4>
+             
+          </div>
+          <p>
+            <a class="btn btn-primary btn-sm btn-b-mg" href="/restaurants/<%= restaurant._id %>">
+              More Info
+            </a>
+          </p>
+        </div>
+      </div>
+    <% })%>
+  </div>
+  <script>
+    var locations =
+         [
+           {
+            "name": "Jack in the Box",
+            "lat": 37.3326787,
+            "lng": -121.8841442,
+            "description": "Qualily burger and fries",
+           },
+           {
+            "name": "Wienerschnitzel",
+            "lat": 37.3447184,
+            "lng": -121.8721046,
+            "description": "It has decent food but a bit too much for my taste",
+           },
+           {
+            "name": "Taco Bell",
+            "lat": 37.3287601,
+            "lng": -121.8589074,
+            "description": "Fast-food chain serving Mexican-inspired fare such as tacos, quesadillas & nachos.",
+           },
+           {
+            "name": "McDonald's",
+            "lat": 37.3304293,
+            "lng": -121.8601749,
+            "description": "Classic, long-running fast-food chain known for its burgers, fries & shakes",
+           },
+           {
+            "name": "Burger King",
+            "lat": 37.3337432,
+            "lng": -121.8542596,
+            "description": "Well-known fast-food chain serving grilled burgers, fries & shakes, plus breakfast.",
+           },
+           {
+            "name": "Wendy's",
+            "lat": 37.3159321,
+            "lng": -121.8739834,
+            "description": "Fast-food burger chain serving sides such as chili & baked potatoes.",
+           },
+           {
+            "name": "Carl's Jr.",
+            "lat": 37.3412496,
+            "lng": -121.9099976,
+            "description": "Fast-food chain known for its variety of piled-high burgers & meal combos, plus shakes.",
+           }
 
-function setMarkers(){
-
-
-console.log(restaurants);
-for(var i=0;restaurants.length;i++)
-{
-{ 
- 
-  var marker = new google.maps.Marker({
-    position: {lat : restaurants[i][lat] ,lng : restaurant[i][lng] },
-            title: restaurants[i][name],
-            url: "restaurants/restaurant._id",
-            map: map,
-            animation: google.maps.Animation.DROP
-  });
-
-  marker.addListener('click', function() {
+         ]
+      function initMap(){
+         var center = {lat: 37.3357192, lng: -121.8867076 };
+         var map = new google.maps.Map(document.getElementById('map'), {
+             zoom: 8,
+             center: center,
+             scrollwheel: false
+         });
+         
+         locations.forEach(restaurant=>{
+          var marker = new google.maps.Marker({
+        position: {lat: restaurant.lat, lng: restaurant.lng},
+        map: map,
+    });
+    
+    marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
-};
-
-</script>
-<header id="map" style="height:600px; width:100%"></header>
-
-<br>
-  <form class="form-inline" action="/restaurants" method="GET">
-    <div class="form-group has-feedback">
-      <label for="search"></label>
-      <input class="form-control" type="text" name="search" placeholder="Search restaurants" autocomplete="off" />
-      <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
-    </div>
-  </form>
-  <hr>
-  <a class="pull-right" href="/restaurants/new">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    Share New restaurants
-  </a>
-</header>
-
-<div class="row text-center" style="display: flex; flex-wrap: wrap;">
-  <% if (noMatch !== null) {%>
-    <div class="col-md-12">
-      <h4><%= noMatch %></h4>
-    </div>
-  <% } %>
-  <%console.log(restaurants);restaurants.forEach((restaurant,index) => {%>
-
-    <div class="col-md-3 col-sm-6">
-      <div class="thumbnail card">
-        <img class="campground__image" data-src="<%= restaurant.image.url%>" alt="<%= restaurant._id %>" />
-        <div class="caption">
-          <h4 class="caption"><%= restaurant.name%></h4>
-            <p>  <% if (restaurant.rating == 1) { %>
-              <p>
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-              </p>
-              <% } else if (restaurant.rating == 2) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (restaurant.rating == 3) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (restaurant.rating == 4) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (restaurant.rating == 5) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } %></p>
-        </div>
-        <p>
-          <a class="btn btn-primary btn-sm btn-b-mg" href="/restaurants/<%= restaurant._id %>">
-            More Info
-          </a>
-        </p>
-      </div>
-    </div>
-  <% })%>
-</div>
-  <script type="text/javascript">
-    function initMap() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 8,
-             center: {lat : 37.3351874, lng: 129},
-             scrollwheel: false,
-  });}
-  var marker = function(){
-  var infowindow = new google.maps.InfoWindow();
-
-  var marker, i=0;
-  var contentString = `
-              <a href="<%=restaurants/restaurants._id%>
-              <strong><%= restaurants.name %><br />
-              <%= restaurants.location %></strong>
-              <p><%= restaurants.description %></p>
-              </a>`;
-  restaurants.forEach (restaurant =>
-  {  
-    console.log(restaurant.lat+","+restaurant.lng);
-    marker = new google.maps.Marker({
-      position: {lat : restaurant.lat ,lng : restaurant.lng },
-              title: restaurant.name,
-              url: "restaurants/restaurant._id",
-              map: map,
-              animation: google.maps.Animation.DROP
-    });
-
-    marker.addListener(marker, (function(marker, i) {
-      return function() {
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
-      }
-    }));
-  });
-  }
-  
-  </script>
+         }
+        )
+        }
+     </script>
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLManIEbcbPo8JQM6cAZyR-oJfImyJwt8&callback=initMap"
      async defer></script> 
 <% include ../partials/footer %>

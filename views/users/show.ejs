@@ -12,9 +12,9 @@
         <% restaurants.forEach(restaurants => { %>
           <div class="col-md-4 col-sm-6">
             <div class="thumbnail card">
-              <img src="<%= restaurant.image.url %>" alt="<%= restaurant.name %>">
+              <img src="<%= restaurants.image.url %>" alt="<%= restaurants.name %>">
               <div class="caption">
-                <h4 class="caption"><a href="/restaurants/<%= restaurant.id %>"><%= restaurant.name %></a></h4>
+                <h4 class="caption"><a href="/restaurants/<%= restaurants.id %>"><%= restaurants.name %></a></h4>
               </div>
             </div>
           </div>

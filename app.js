@@ -20,7 +20,7 @@ var express        = require("express"),
      
 
 // connect to the DB
-let url = process.env.DATABASEURL ;
+let url = process.env.DATABASEURL||"mongodb://localhost/restaurants"; 
 mongoose.connect(url, {useNewUrlParser: true});
 
 

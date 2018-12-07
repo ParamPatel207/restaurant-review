@@ -9,7 +9,37 @@
       <img class="img-responsive" src="<%= restaurants.image.url %>">
       <div class="caption">
         <h4><a><%= restaurants.name %></a></h4>
-        <p><%=restaurants.rating%></p>
+        <p><% if (restaurants.rating == 1) { %>
+          <p>
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+          </p>
+          <% } else if (restaurants.rating == 2) { %>
+            <p>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </p>
+          <% } else if (restaurants.rating == 3) { %>
+            <p>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </p>
+          <% } else if (restaurants.rating == 4) { %>
+            <p>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </p>
+          <% } else if (restaurants.rating == 5) { %>
+            <p>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+            </p>
+          <% } %></p>
         <p><%= restaurants.description %></p>
         <p>
           <em>Submitted By <a href="/users/<%= restaurants.author.id %>"><%= restaurants.author.username %></a>, <%= moment(restaurants.createdAt).fromNow() %></em>
@@ -79,39 +109,42 @@
             </strong>
             <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
             <p>
+                <% if (comment.rating == 1) { %>
+                  <p>
+                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                  </p>
+                  <% } else if (comment.rating == 2) { %>
+                    <p>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </p>
+                  <% } else if (comment.rating == 3) { %>
+                    <p>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </p>
+                  <% } else if (comment.rating == 4) { %>
+                    <p>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </p>
+                  <% } else if (comment.rating == 5) { %>
+                    <p>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                    </p>
+                  <% } %>
+            </p>
+            <p>
               <%= comment.text %>
             </p>
-            <% if (comment.rating == 1) { %>
-              <p>
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-              </p>
-              <% } else if (comment.rating == 2) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (comment.rating == 3) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (comment.rating == 4) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } else if (comment.rating == 5) { %>
-                <p>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                </p>
-              <% } %>
+            
             <% if (currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) {%>
               <a
                 class="btn btn-warning btn-xs"
