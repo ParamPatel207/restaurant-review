@@ -52,7 +52,7 @@ body {
   }
   
   .slideshow li { 
-    animation: imageAnimation 50s linear 2.5s infinite; 
+    animation: imageAnimation 20s linear .5s infinite; 
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
