@@ -8,7 +8,7 @@ const express    = require("express"),
       var options = {
         provider: 'google',
         httpAdapter: 'https',
-        apiKey : 'AIzaSyDVYIBhNLih48SxKGguGNMC_GIMwHjMYKA',
+        apiKey : ,
         formatter:null
       }
       var geocoder = NodeGeocoder(options);
@@ -31,9 +31,9 @@ const upload = multer({ storage: storage, fileFilter: imageFilter});
 
 // cloudinary config
 cloudinary.config({ 
-  cloud_name: 'paramppatel', 
-  api_key: 866195422747955, 
-  api_secret: 'AHgupdmq8eHZ2DIKjj8og2DuGjw',
+  cloud_name: , 
+  api_key: , 
+  api_secret: ,
 });
 
 // ============= ROUTES ==============
